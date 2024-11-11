@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Weather Dashboard</h1>
+  </header>
+  <main class="container">
+    <section class="weather-input">
+      <h3>Find Weather Information</h3>
+      <div class="input-group">
+        <input class="city-input" type="text" placeholder="E.g., Delhi, Lucknow, Ghaziabad, ...">
+        <button class="search-btn">Search</button>
+      </div>
+      <div class="or-divider">
+        <br>
+        <p>------------------------ or ------------------------</p>
+        <br>
+      </div>
+      <button class="location-btn">Use My Location</button>
+    </section>
+    <section class="weather-data">
+      <div class="current-weather">
+        <div class="details" id="card">
+          <h2>City Name (Date)</h2>
+          <h6>Temperature: __°C</h6>
+          <h6><box-icon name='wind'></box-icon> Wind: __ M/S</h6>
+          <h6><box-icon name='water'></box-icon> Humidity: __%</h6>
+        </div>
+      </div>
+      <div class="days-forecast">
+        <h2>5-Day Weather Forecast</h2>
+        <ul class="weather-cards">
+          <li class="card">
+            <h3>Date</h3>
+            <h6>Temp: __°C</h6>
+            <h6><box-icon name='wind'></box-icon> Wind: __ M/S</h6>
+            <h6><box-icon name='water'></box-icon> Humidity: __%</h6>
+          </li>
+          <li class="card">
+            <h3>Date</h3>
+            <h6>Temp: __°C</h6>
+            <h6><box-icon name='wind'></box-icon> Wind: __ M/S</h6>
+            <h6><box-icon name='water'></box-icon> Humidity: __%</h6>
+          </li>
+          <li class="card">
+            <h3>Date</h3>
+            <h6>Temp: __°C</h6>
+            <h6><box-icon name='wind'></box-icon> Wind: __ M/S</h6>
+            <h6><box-icon name='water'></box-icon> Humidity: __%</h6>
+          </li>
+          <li class="card">
+            <h3>Date</h3>
+            <h6>Temp: __°C</h6>
+            <h6><box-icon name='wind'></box-icon> Wind: __ M/S</h6>
+            <h6><box-icon name='water'></box-icon> Humidity: __%</h6>
+          </li>
+          <li class="card">
+            <h3>Date</h3>
+            <h6>Temp: __°C</h6>
+            <h6><box-icon name='wind'></box-icon> Wind: __ M/S</h6>
+            <h6><box-icon name='water'></box-icon> Humidity: __%</h6>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
