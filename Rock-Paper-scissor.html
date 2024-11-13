@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    background-color: #b1bfd8;
+    background-image: linear-gradient(315deg, #b1bfd8 0%, #6782b4 74%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Poppins", sans-serif;
+}
+
+.game-container{
+    width: 60%;
+}
+
+.title{
+    background: white;
+    margin: 2rem 0;
+    padding: .5rem 0;
+
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+}
+
+.game{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    border: 5px solid white;
+    padding: 3rem 2rem;
+    text-align: center;
+
+    height: 250px;
+}
+
+.game img{
+    width: 130px;
+    height: 120px;
+}
+
+h1{
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.choices{
+    display: flex;
+    justify-content: center;
+}
+
+.img{
+    width: 100px;
+    height: 100px;
+
+    padding: .7rem;
+    margin-right: 2rem;
+
+    border-radius: 50%;
+    border: .4rem solid black;
+
+    cursor: pointer;
+
+    transition: background .3s ease-in-out;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    user-select: none;
+}
+
+.img:hover{
+    background: black;
+}
+
+.img img{
+    width: 100%;
+}
+
+.result{
+    font-size: 1.5rem;
+    font-family: monospace, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    width: 300px;
+}
+
+.game h4{
+    margin-bottom: 1rem;
+}
+
+/* Responsiveness  */
+
+@media screen and (max-width: 1000px){
+    .game-container{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 700px){
+    .game-conatiner{
+        width: 90%;
+    }
+    .game img{
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .game-container{
+        width: 95%;
+    }
+
+    .game img{
+        width: 100px;
+        height: fit-content;
+    }
+    .title{
+        padding: 1rem 1rem;
+    }
+
+    .result{
+        font-size: 1rem;
+    }
+}
+    </style>
+    <div class="game-container">
+        <h1 class="title">
+            Rock, Paper & Scissors
+        </h1>
+        <div class="game">
+            <div class="player1">
+                <h4>Player</h4>
+                <img src="./images/rock.png" alt="rock">
+                <h3 class="p-choice"></h3>
+            </div>
+            <div class="result">Start!</div>
+            <div class="computer">
+                <h4>Computer</h4>
+                <img src="./images/rock.png" alt="rock">
+                <h3 class="c-choice"></h3>
+            </div>
+        </div>
+        <h1>Choose:</h1>
+        <div class="choices">
+            <div class="img" id="rock">
+                <img src="./images/rock.png" alt="rock">
+            </div>
+            <div class="img" id="paper">
+                <img src="./images/paper.png" alt="paper">
+            </div>
+            <div class="img" id="scissors">
+                <img src="./images/scissors.png" alt="scissors">
+            </div>
+        </div>
+    </div>
+    <script>
+        const pChoice = document.querySelector(".p-choice");
+const pImg = pChoice.previousElementSibling;
+
+const cChoice = document.querySelector(".c-choice");
+const cImg = cChoice.previousElementSibling;
+
+const weapons = document.querySelectorAll(".img");
+const result = document.querySelector(".result");
+
+function randomNumber() {
+  return Math.floor(Math.random() * 3);
+}
+
+// console.log(randomNumber())
+
+function computer() {
+  const choices = ["paper", "rock", "scissors"];
+  const ele = choices[randomNumber()];
+  cImg.src = `images/${ele}.png`;
+  cImg.id = ele;
+  cChoice.innerHTML = ele;
+}
+
+weapons.forEach((weapon) => {
+  weapon.addEventListener("click", () => {
+    const item = weapon.childNodes[1];
+    pImg.src = item.src;
+    pImg.id = weapon.id;
+    pChoice.innerHTML = weapon.id;
+
+    computer();
+    check(cImg.id, pImg.id);
+  });
+});
+
+function check(a, b) {
+  let msg;
+  if (a == b) {
+    msg = "DRAW";
+  }
+  if (a == "rock" && b == "paper") {
+    msg = "You Win!";
+  } else if (a == "rock" && b == "scissors") {
+    msg = "You Lose!";
+  }
+
+  if (a == "paper" && b == "scissors") {
+    msg = "You Win!";
+  } else if (a == "paper" && b == "rock") {
+    msg = "You Lose!";
+  }
+
+  if (a == "scissors" && b == "rock") {
+    msg = "You Win!";
+  } else if (a == "scissors" && b == "paper") {
+    msg = "You Lose!";
+  }
+
+  result.innerHTML = msg;
+  document.body.style.pointerEvents = "none";
+
+  setInterval(() => {
+    result.innerHTML += ".";
+  }, 700);
+  setTimeout(() => {
+    location.reload();
+  }, 2200);
+}
+
+    </script>
+</body>
+<script src="app.js"></script>
+</html>
