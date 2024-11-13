@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <!-- <link rel="stylesheet" href="style14.css"> -->
+</head>
+<body>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    font-family:'poppins',sans-serif;
+    box-sizing: border-box;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+    background-color: #b8e5f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(./1.jpg);
+    /*background-size: cover;
+    */background-repeat: no-repeat;
+    box-shadow: 25px 25px 75px rgba(0,0,0,0.25),    10px 10px 70px rgba(0,0,0,0.25),    inset 5px 5px 10px rgba(0,0,0,0.5),    inset 5px 5px 20px rgba(255,255,255,0.2),    inset -5px -5px 15px rgba(0,0,0,0.75);
+}
+.calculator:hover{
+    -o-transform: scale(1.1);
+    box-shadow: 25px 25px 75px rgba(0,0,0,0.25),
+    10px 10px 70px rgba(0,0,0,0.25),
+    inset 5px 5px 10px rgba(0,0,0,0.5),
+    inset 5px 5px 20px rgba(255,255,255,0.2),
+    inset -5px -5px 15px rgba(0,0,0,0.75);
+    border: 0.1px solid black;
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.calculator{
+    background: #3a4452;
+    padding: 20px;
+    -o-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    border-radius: 30px;
+    box-shadow: 25px 25px 75px rgba(0,0,0,0.25),    10px 10px 70px rgba(0,0,0,0.25),    inset 5px 5px 10px rgba(0,0,0,0.5),    inset 5px 5px 20px rgba(255,255,255,0.2),    inset -5px -5px 15px rgba(0,0,0,0.75);
+}
+.calculator form input{
+    border: 0;
+    outline: 0;
+    width: 60px;
+    height: 60px;
+    -o-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: -8px -8px 15px rgba(255,255,255,0.1),5px 5px 15px rgba(0,0,0,0.2);
+    background: transparent;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px;
+}
+.calculator form input:hover{
+    color: #94a794;
+    -o-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    /* background-color:  #515d6e; */
+}
+form .display{
+    display:flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+form .display input{
+    text-align: right;
+    flex: 1;
+    font-size: 45px;
+    box-shadow: none;
+}
+form input.equal{
+    width: 145px;
+}
+form input.operator{
+    color: #33ffd8;
+    /* background-color: rgb(0, 204, 255); */
+}
+form input.operator:hover{
+    color: #788ae4;
+}
+form input.operatorr{
+    color: #ff9933;
+    /* background-color: #607d8b; */
+}
+form input.operatorr:hover{
+    color: #fff200;
+}
+form input.equal{
+    color: #33ff47;
+    /* background-color: #ff2c74; */
+}
+form input.equal:hover{
+    color: #00eaff;
+}
+#pointer{
+    width: 18px;
+    height: 18px;
+    background-color: #ff0000;
+    -o-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    border-radius: 50px;
+    position: relative;
+    bottom: 127px;
+    left: -4px;
+    display: flex;
+    /* display: inline; */
+    text-align: center;
+    justify-content: center;
+    color: white;
+}
+#pointer:hover{
+    -o-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+#minimize{
+    width: 18px;
+    height: 18px;
+    background-color: #eeff00;
+    -o-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    border-radius: 50px;
+    position: relative;
+    bottom: 145px;
+    left: 18px;
+    display: flex;
+    /* display: inline; */
+    text-align: center;
+    color: white;
+    justify-content: center;
+}
+#minimize:hover{
+    -o-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+#max{
+    width: 18px;
+    height: 18px;
+    background-color: #59ff00;
+    -o-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    border-radius: 50px;
+    position: relative;
+    bottom: 163px;
+    left: 40px;
+    display: flex;
+    /* display: inline; */
+    text-align: center;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
+}
+#max:hover{
+    -o-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+    </style>
+    
+ <div class="container">
+    <div class="calculator">
+        <form>
+            <div class="display">
+                <input type="text" name="display">
+            </div>
+            <div >
+                <a href=""> <p id="pointer"></p> </a>
+                <a href=""> <p id="minimize"></p> </a>
+                <a href=""> <p id="max"></p> </a>
+            </div>
+            <div>
+                <input type="button" value="AC" onclick="display.value = '' " class="operator">
+                <input type="button" value="DE" onclick="display.value = display.value.toString().slice(0,-1) " class="operator">
+                <input type="button" value="." onclick="display.value += '.' " class="operatorr">
+                <input type="button" value="/" onclick="display.value += '/' " class="operatorr">
+            </div>
+            <div>
+                <input type="button" value="7" onclick="display.value += '7' ">
+                <input type="button" value="8" onclick="display.value += '8' ">
+                <input type="button" value="9" onclick="display.value += '9' ">
+                <input type="button" value="*" onclick="display.value += '*' " class="operatorr">
+            </div>
+            <div>
+                <input type="button" value="4" onclick="display.value += '4' ">
+                <input type="button" value="5" onclick="display.value += '5' ">
+                <input type="button" value="6" onclick="display.value += '6' ">
+                <input type="button" value="-" onclick="display.value += '-' " class="operatorr" >
+            </div>
+            <div>
+                <input type="button" value="1" onclick="display.value += '1' ">
+                <input type="button" value="2" onclick="display.value += '2' ">
+                <input type="button" value="3" onclick="display.value += '3' ">
+                <input type="button" value="+" onclick="display.value += '+' " class="operatorr">
+            </div>
+            <div>
+                <input type="button" value="00" onclick="display.value += '00' ">
+                <input type="button" value="0" onclick="display.value += '0' ">
+                <input type="button" value="=" class="equal" onclick="display.value = eval(display.value)">
+            </div>
+        </form>
+
+    </div>
+
+ </div>
+
+</body>
+<script src="script14.js"></script>
+</html>
+

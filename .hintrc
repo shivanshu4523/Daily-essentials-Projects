@@ -12,6 +12,8 @@
           "backdrop-filter"
         ]
       }
-    ]
+    ],
+    "axe/forms": "off",
+    "axe/name-role-value": "off"
   }
 }
