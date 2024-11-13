@@ -5,14 +5,7 @@
   "hints": {
     "disown-opener": "off",
     "css-prefix-order": "off",
-    "compat-api/css": [
-      "default",
-      {
-        "ignore": [
-          "backdrop-filter"
-        ]
-      }
-    ],
+    "compat-api/css": "off",
     "axe/forms": "off",
     "axe/name-role-value": "off"
   }

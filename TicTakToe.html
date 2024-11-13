@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style17.css"> -->
+</head>
+<body>
+    <style>
+        *{
+    color: antiquewhite;
+    font-family: sans-serif;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -ms-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    user-select: none;
+}
+.align{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+      background-color: #252A34;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      text-align: center;
+      padding-top: 5vh;
+}
+.turn-container{
+    width: 170px;
+    height: 80px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+}
+.turn-container h3{
+    margin: 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+.turn-container .turn-box{
+    position: relative;
+    top: 13px;
+    border: 3px solid #000;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+.turn-container .turn-box:nth-child(even){
+    border-right:none;
+}
+.bg{
+    position: relative;
+    /* bottom: 0; */
+    /* left: 0; */
+    bottom: 21px;
+    width: 85px;
+    height: 33px;
+    left: 1px;
+    background-color: #FF2E63;
+    z-index: -1;
+}
+.main-grid{
+    display: grid;
+    grid-template-columns:repeat(3,1fr) ;
+    grid-template-rows: repeat(3,1fr);
+    height: 400px;
+    width: 400px;
+    margin: 30px auto;   
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    background: #2f363e;
+    padding: 30px 30px;
+    box-shadow: 25px 25px 75px rgba(0,0,0,0.25),    10px 10px 70px rgba(0,0,0,0.25),    inset 5px 5px 10px rgba(0,0,0,0.5),    inset 5px 5px 20px rgba(255,255,255,0.2),    inset -5px -5px 15px rgba(0,0,0,0.75);
+    /* border: 2px solid black; */
+}
+.main-grid:hover{
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+}
+.box{
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: 700;
+    border: 2px solid #000;
+}
+.box:hover{
+    background-color: #FF2E63;
+    /* z-index: 0; */
+}
+#play-again{
+    background-color: #FF2E63;
+    padding: 10px 25px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    cursor: pointer;
+}
+#play-again:hover{
+    padding: 10px 40px;
+    background-color: #08D9D6;
+    color: #000;
+}
+
+    </style>
+    
+          <div class="turn-container"> 
+                     <h3> Turn For</h3>
+                <div class="turn-box align">X</div>
+                <div class="turn-box align">O</div>
+                <div class="bg"></div>
+          </div>
+    <div class="main-grid">
+        <div class="box align">0</div>
+        <div class="box align">1</div>
+        <div class="box align">2</div>
+        <div class="box align">3</div>
+        <div class="box align">4</div>
+        <div class="box align">5</div>
+        <div class="box align">6</div>
+        <div class="box align">7</div>
+        <div class="box align">8</div>
+    </div>
+       <h2 id="results">X Wins</h2>
+       <button id="play-again">Play Again</button>
+
+<audio id="restart">
+    <source src="./restart.mp3" type="audio/mp3" >
+  </audio>
+
+  <script>
+    let boxes = document.querySelectorAll(".box");
+
+let turn = "X";
+let isGameOver = false;
+
+// Add sound effects
+let clickSound = new Audio("mouse.mp3");
+let winSound = new Audio("success.mp3");
+let drawSound = new Audio("cute.mp3");
+
+boxes.forEach(e => {
+    e.innerHTML = "";
+    e.addEventListener("click", () => {
+        if (!isGameOver && e.innerHTML === "") {
+            e.innerHTML = turn;
+            clickSound.play(); // Play click sound
+            checkWin();
+            checkDraw();
+            changeTurn();
+        }
+    });
+});
+
+function changeTurn() {
+    if (turn === "O") {
+        turn = "X";
+        document.querySelector(".bg").style.left = "1px";
+    } else {
+        turn = "O";
+        document.querySelector(".bg").style.left = "85px";
+    }
+}
+
+function checkWin() {
+    let winConditions = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+    for (let i = 0; i < winConditions.length; i++) {
+        let v0 = boxes[winConditions[i][0]].innerHTML;
+        let v1 = boxes[winConditions[i][1]].innerHTML;
+        let v2 = boxes[winConditions[i][2]].innerHTML;
+
+        if (v0 !== "" && v0 === v1 && v0 === v2) {
+            isGameOver = true;
+            document.querySelector("#results").innerHTML = turn + " wins";
+            document.querySelector("#play-again").style.display = "inline";
+            winSound.play(); // Play win sound
+
+            for (let j = 0; j < 3; j++) {
+                boxes[winConditions[i][j]].style.backgroundColor = "#08D9D6";
+                boxes[winConditions[i][j]].style.color = "#000";
+            }
+        }
+    }
+}
+
+function checkDraw() {
+    if (!isGameOver) {
+        let isDraw = true;
+        boxes.forEach(e => {
+            if (e.innerHTML === "") isDraw = false;
+        });
+
+        if (isDraw) {
+            isGameOver = true;
+            document.querySelector("#results").innerHTML = "It's a draw!";
+            document.querySelector("#play-again").style.display = "inline";
+            drawSound.play(); // Play draw sound
+        }
+    }
+}
+
+document.querySelector("#play-again").addEventListener("click", () => {
+    isGameOver = false;
+    turn = "X";
+    document.querySelector(".bg").style.left = "";
+    document.querySelector("#results").innerHTML = "";
+    document.querySelector("#play-again").style.display = "none";
+
+    boxes.forEach(e => {
+        e.innerHTML = "";
+        e.style.removeProperty("background-color");
+        e.style.color = "#fff";
+    });
+});
+
+// audio
+
+
+var audio = document.getElementById("myAudio");
+audio.volume = 0.3;
+
+
+var audio = document.getElementById("restart");
+var playText = document.getElementById("play-again");
+
+playText.onclick = function() {
+    if (audio.paused) {
+        audio.play();
+    } 
+};
+
+
+
+
+
+
+
+  </script>
+</body>
+<!-- <script src="script17.js"></script> -->
+</html>
