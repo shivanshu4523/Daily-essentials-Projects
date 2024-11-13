@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <style>
+    /* Global Styling */
+    body, html {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ff8a00, #e52e71);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Main Container */
+    .url-shortener {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Heading */
+    h1 {
+      font-size: 2rem;
+      color: #e52e71;
+      margin-bottom: 1rem;
+    }
+
+    /* URL Input */
+    input[type="url"] {
+      width: 90%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 2px solid #ff8a00;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="url"]:focus {
+      border-color: #e52e71;
+    }
+
+    /* Buttons */
+    .generate-btn, .copy-btn {
+      background-color: #ff8a00;
+      border: none;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .generate-btn:hover, .copy-btn:hover {
+      background-color: #e52e71;
+      transform: scale(1.05);
+    }
+
+    /* Short URL Display */
+    .short-url {
+      font-size: 1.1rem;
+      padding: 0.8rem;
+      margin: 1rem 0;
+      background: #f0f0f0;
+      border: 1px solid #e52e71;
+      border-radius: 5px;
+      word-break: break-all;
+    }
+
+    /* URL History */
+    .url-history {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .url-history h2 {
+      color: #ff8a00;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .url-history ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .url-history li {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .url-history a {
+      color: #ff8a00;
+      text-decoration: none;
+    }
+
+    .url-history a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="url-shortener">
+  <h1>URL Shortener</h1>
+  <input type="url" id="originalUrl" placeholder="Enter URL here" required>
+  <button class="generate-btn" onclick="generateShortUrl()">Generate Short URL</button>
+
+  <!-- Shortened URL Display -->
+  <div id="shortUrlContainer" class="short-url" style="display:none;">
+    <span id="shortUrlText"></span>
+    <button class="copy-btn" onclick="copyShortUrl()">Copy</button>
+  </div>
+
+  <!-- URL History -->
+  <div class="url-history" id="urlHistory">
+    <h2>URL History</h2>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<script>
+  // Global variable for URL history
+  const urlHistory = [];
+
+  // Generate Short URL
+  function generateShortUrl() {
+    const originalUrl = document.getElementById("originalUrl").value.trim();
+
+    if (!isValidUrl(originalUrl)) {
+      alert("Please enter a valid URL");
+      return;
+    }
+
+    // Generate a random string as a short URL (e.g., as a stand-in for actual shortening logic)
+    const shortUrl = "https://short.ly/" + Math.random().toString(36).substring(7);
+    document.getElementById("shortUrlText").textContent = shortUrl;
+
+    // Display the shortened URL container
+    document.getElementById("shortUrlContainer").style.display = "block";
+
+    // Save to history
+    addToHistory(originalUrl, shortUrl);
+  }
+
+  // URL Validation
+  function isValidUrl(url) {
+    const urlPattern = new RegExp("^(https?:\\/\\/)?"+ // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|"+ // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))"+ // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*"+ // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?"+ // query string
+      "(\\#[-a-z\\d_]*)?$","i"); // fragment locator
+    return !!urlPattern.test(url);
+  }
+
+  // Add URL to History
+  function addToHistory(originalUrl, shortUrl) {
+    const historyItem = { originalUrl, shortUrl };
+    urlHistory.push(historyItem);
+    updateHistoryList();
+  }
+
+  // Update History List in DOM
+  function updateHistoryList() {
+    const historyList = document.getElementById("historyList");
+    historyList.innerHTML = ""; // Clear list
+
+    urlHistory.forEach(item => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `<strong>Original:</strong> <a href="${item.originalUrl}" target="_blank">${item.originalUrl}</a><br>
+                            <strong>Short:</strong> <a href="${item.shortUrl}" target="_blank">${item.shortUrl}</a>`;
+      historyList.appendChild(listItem);
+    });
+  }
+
+  // Copy Short URL to Clipboard
+  function copyShortUrl() {
+    const shortUrlText = document.getElementById("shortUrlText").textContent;
+    navigator.clipboard.writeText(shortUrlText).then(() => {
+      alert("Short URL copied to clipboard!");
+    }).catch(() => {
+      alert("Failed to copy URL");
+    });
+  }
+</script>
+
+</body>
+</html>
